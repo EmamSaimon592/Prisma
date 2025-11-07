@@ -119,3 +119,47 @@ Then, run prisma generate which reads your Prisma schema and generates the Prism
 npx prisma generate
 
 ```
+
+# if you wanna MySQL password changed 
+1. Step-by-Step: Change MySQL Root Password
+### 1. Open MySQL as root
+ In your terminal or command prompt:
+ ```besh
+mysql -u root -p
+```
+
+### 2. Change the password
+ Once inside the MySQL console, run:
+```besh
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'yourNewPassword';
+FLUSH PRIVILEGES;
+```
+### 3. Verify the password change
+Exit MySQL:
+```
+exit
+```
+
+### Then try to log in again:
+```besh
+mysql -u root -p
+```
+<b>Now enter your new password — it should work </b>
+
+### 4. Update your .env for Prisma
+Once it’s working, open your .env file and update this line:
+```besh
+DATABASE_URL="mysql://root:yourNewPassword@localhost:3306/yourDatabaseName "
+
+```
+### 5. Regenerate Prisma client and migrate again
+Run these:
+```besh
+npx prisma generate
+npx prisma migrate dev --name update-password
+```
+# Author
+Imam Hossain <br>
+Bsc in CSE <br>
+IIUC
+
